@@ -5,6 +5,7 @@ import com.example.studentapp.model.Student;
 import com.example.studentapp.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,23 +15,28 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
 
+    @Transactional
     public Student createStudent(Student student) {
         return studentRepository.save(student);
     }
 
+    @Transactional(readOnly = true)
     public List<Student> getAllStudents() {
         return studentRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public Student getStudentById(Long id) {
         return studentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + id));
     }
 
+    @Transactional
     public Student updateStudent(Long id, Student studentDetails) {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + id));
 
+        // Let Hibernate manage the update via dirty checking mechanism
         student.setFirstName(studentDetails.getFirstName());
         student.setLastName(studentDetails.getLastName());
         student.setAge(studentDetails.getAge());
@@ -40,13 +46,14 @@ public class StudentService {
         student.setTuitionFee(studentDetails.getTuitionFee());
         student.setGender(studentDetails.getGender());
 
-        return studentRepository.save(student);
+        return student; // No need to explicitly call save() inside a transactional boundary
     }
 
+    @Transactional
     public void deleteStudent(Long id) {
-        Student student = studentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + id));
-
-        studentRepository.delete(student);
+        if (!studentRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Student not found with id: " + id);
+        }
+        studentRepository.deleteById(id);
     }
 }
