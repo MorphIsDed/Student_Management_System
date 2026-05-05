@@ -11,10 +11,10 @@ function showToast(message, isError = false) {
     toast.show();
 }
 
-// Format Currency
-const currencyFormatter = new Intl.NumberFormat('en-US', {
+// Format Currency to Rupee (INR)
+const currencyFormatter = new Intl.NumberFormat('en-IN', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'INR',
 });
 
 // Fetch and display all students
