@@ -1,0 +1,53 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card {
+    border: none;
+    border-radius: 0.5rem;
+}
+
+.table > :not(caption) > * > * {
+    padding: 1rem 0.75rem;
+}
+
+.avatar-circle {
+    width: 40px;
+    height: 40px;
+    background-color: #e9ecef;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #495057;
+    font-weight: 600;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.form-label {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: #495057;
+}
+
+.btn-action {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+}
